@@ -1,0 +1,14 @@
+#!/bin/sh
+cd "$(dirname "$0")"
+
+if [ -f ".env" ]
+then
+  export $(cat .env | sed 's/#.*//g' | xargs)
+fi
+
+if [ -f ".env.local" ]
+then
+  export $(cat .env.local | sed 's/#.*//g' | xargs)
+fi
+
+docker push "${BUILD_IMAGE}:$1"
