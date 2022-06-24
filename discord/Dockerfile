@@ -15,5 +15,5 @@ RUN set -eux; apt-get update; \
 
 #
 # copy configuation files
-COPY supervisord.conf /etc/neko/supervisord/firefox.conf
+COPY supervisord.conf /etc/neko/supervisord/discord.conf
 COPY openbox.xml /etc/neko/openbox.xml
