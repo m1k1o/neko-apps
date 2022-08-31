@@ -7,7 +7,7 @@ ARG SRC_URL="https://go.microsoft.com/fwlink/?LinkID=760868"
 # install latest vscode
 RUN set -eux; apt-get update; \
     wget -O /tmp/vscode.deb "${SRC_URL}"; \
-    apt-get install -y --no-install-recommends openbox /tmp/vscode.deb; \
+    apt-get install -y --no-install-recommends gnupg openbox /tmp/vscode.deb; \
     apt-get install -f; \
     #
     # clean up
