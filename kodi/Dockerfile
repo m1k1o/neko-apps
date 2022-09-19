@@ -4,7 +4,7 @@ FROM $BASE_IMAGE
 #
 # install kodi
 RUN set -eux; apt-get update; \
-    apt-get install -y --no-install-recommends kodi; \
+    apt-get install -y --no-install-recommends kodi kodi-repository-kodi kodi-inputstream-adaptive; \
     #
     # clean up
     apt-get clean -y; \
