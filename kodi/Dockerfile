@@ -4,11 +4,13 @@ FROM $BASE_IMAGE
 #
 # install kodi
 RUN set -eux; apt-get update; \
-    apt-get install -y --no-install-recommends kodi kodi-repository-kodi kodi-inputstream-adaptive; \
+    apt-get install -y --no-install-recommends kodi kodi-repository-kodi kodi-pvr-iptvsimple; \
     #
     # clean up
     apt-get clean -y; \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+# VOLUME [ "/home/neko/.kodi" ]
 
 #
 # copy configuation files

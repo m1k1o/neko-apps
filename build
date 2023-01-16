@@ -27,9 +27,23 @@ build_arm() {
   fi
 }
 
+build_nvidia() {
+  if [ -f "$1/Dockerfile.nvidia" ]
+  then
+    # build dedicated nvidia image
+    docker build -t "${BUILD_IMAGE}:nvidia-$1" --build-arg="BASE_IMAGE=${NVIDIA_BASE_IMAGE}" -f "$1/Dockerfile.nvidia" "$1/"
+  else
+    # try to build nvidia image with common Dockerfile
+    docker build -t "${BUILD_IMAGE}:nvidia-$1" --build-arg="BASE_IMAGE=${NVIDIA_BASE_IMAGE}" -f "$1/Dockerfile" "$1/"
+  fi
+}
+
 case $1 in
   # build arm- images
   arm-*) build_arm "${1#arm-}";;
+
+  # build nvidia- images
+  nvidia-*) build_nvidia "${1#nvidia-}";;
 
   # build images
   *) build "$1";;
