@@ -1,0 +1,21 @@
+ARG BASE_IMAGE=m1k1o/neko:nvidia-base
+FROM $BASE_IMAGE
+
+#
+# install kodi
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends  software-properties-common git build-essential cmake; \
+    add-apt-repository ppa:team-xbmc/ppa; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends kodi kodi-pvr-iptvsimple; \
+    #
+    # clean up
+    apt-get clean -y; \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+# VOLUME [ "/home/neko/.kodi" ]
+
+#
+# copy configuation files
+COPY supervisord.nvidia.conf /etc/neko/supervisord/kodi.conf
