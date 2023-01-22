@@ -5,7 +5,7 @@ FROM $BASE_IMAGE
 # install kodi
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends  software-properties-common git build-essential cmake; \
+    apt-get install -y --no-install-recommends  software-properties-common; \
     add-apt-repository ppa:team-xbmc/ppa; \
     apt-get update; \
     apt-get install -y --no-install-recommends kodi kodi-pvr-iptvsimple; \
