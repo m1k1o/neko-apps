@@ -4,7 +4,7 @@ FROM $BASE_IMAGE
 #
 # install kodi
 RUN set -eux; apt-get update; \
-    apt-get install -y --no-install-recommends kodi kodi-repository-kodi kodi-pvr-iptvsimple; \
+    apt-get install -y --no-install-recommends kodi kodi-repository-kodi kodi-pvr-iptvsimple kodi-inputstream-adaptive kodi-inputstream-ffmpegdirect; \
     #
     # clean up
     apt-get clean -y; \
