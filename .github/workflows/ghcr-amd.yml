@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: m1k1o/neko-apps
+  IMAGE_NAME: ${{ github.repository }}
   TAG_PREFIX: ""
   BASE_IMAGE: ghcr.io/m1k1o/neko/base:latest
   PLATFORMS: linux/amd64
@@ -17,10 +17,10 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    #
-    # do not run on forks
-    #
-    if: github.repository_owner == 'm1k1o'
+    permissions:
+      contents: read
+      packages: write
+
     strategy:
       # Will build all images even if some fail.
       matrix:
@@ -59,7 +59,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_ACCESS_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - 
         name: Build and push
         uses: docker/build-push-action@v2
