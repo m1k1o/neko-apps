@@ -1,4 +1,4 @@
-name: "amd64 images"
+name: "nvidia gpu supported images"
 
 on:
   push:
