@@ -56,7 +56,9 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_ACCESS_TOKEN }}
-      - TAG_NAME
+      - 
+        name: Build and push
+        uses: docker/build-push-action@v2
         with:
           context: ${{ env.TAG_NAME }}
           platforms: ${{ env.PLATFORMS }}
