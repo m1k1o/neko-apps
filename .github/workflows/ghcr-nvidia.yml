@@ -26,8 +26,10 @@ jobs:
       matrix:
         include:
           - tag: kodi
+            dockerfile: Dockerfile.nvidia
     env:
       TAG_NAME: ${{ matrix.tag }}
+      DOCKERFILE: ${{ matrix.dockerfile }}
     steps:
       -
         name: Checkout
@@ -61,6 +63,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ${{ env.TAG_NAME }}
+          file: ${{ env.DOCKERFILE }}
           platforms: ${{ env.PLATFORMS }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
