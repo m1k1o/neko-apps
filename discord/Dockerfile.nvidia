@@ -1,0 +1,22 @@
+ARG BASE_IMAGE=m1k1o/neko:nvidia-base
+FROM $BASE_IMAGE
+
+ARG SRC_URL="https://discordapp.com/api/download?platform=linux&format=deb"
+
+#
+# install latest discord and required libraries
+RUN set -eux; \
+    echo deb http://archive.ubuntu.com/ubuntu/ jammy main restricted >> /etc/apt/sources.list.d/jammy.list; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends software-properties-common; \
+    wget -O /tmp/discord.deb "${SRC_URL}"; \
+    apt-get install -y --no-install-recommends libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 openbox /tmp/discord.deb; \
+    #
+    # clean up
+    apt-get clean -y; \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/*;
+
+#
+# copy configuation files
+COPY supervisord.nvidia.conf /etc/neko/supervisord/discord.conf
+COPY openbox.xml /etc/neko/openbox.xml

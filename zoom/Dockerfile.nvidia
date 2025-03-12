@@ -1,0 +1,21 @@
+ARG BASE_IMAGE=m1k1o/neko:nvidia-base
+FROM $BASE_IMAGE
+
+ARG SRC_URL="https://zoom.us/client/latest/zoom_amd64.deb"
+
+#
+# install latest zoom
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends software-properties-common; \
+    wget -O /tmp/zoom.deb "${SRC_URL}"; \
+    apt-get install -y --no-install-recommends openbox /tmp/zoom.deb; \
+    #
+    # clean up
+    apt-get clean -y; \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/*;
+
+#
+# copy configuation files
+COPY supervisord.nvidia.conf /etc/neko/supervisord/zoom.conf
+COPY openbox.xml /etc/neko/openbox.xml
