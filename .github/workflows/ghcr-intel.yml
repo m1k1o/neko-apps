@@ -1,4 +1,4 @@
-name: "nvidia gpu supported images"
+name: "intel gpu supported images"
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
       - 'v*'
 
 env:
-  FLAVOR_PREFIX: nvidia-
-  BASE_IMAGE: ghcr.io/m1k1o/neko/nvidia-base:latest
+  FLAVOR_PREFIX: intel-
+  BASE_IMAGE: ghcr.io/m1k1o/neko/intel-base:latest
 
 jobs:
   build-app:
@@ -20,8 +20,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - name: discord
+            platforms: linux/amd64
           - name: kodi
-            dockerfile: Dockerfile.nvidia
+            platforms: linux/amd64
+          - name: vncviewer
+            platforms: linux/amd64
+          - name: vscode
+            platforms: linux/amd64
+          - name: zoom
             platforms: linux/amd64
     steps:
       - name: Checkout

@@ -1,4 +1,4 @@
-name: "nvidia gpu supported images"
+name: "amd64 images"
 
 on:
   push:
@@ -8,8 +8,7 @@ on:
       - 'v*'
 
 env:
-  FLAVOR_PREFIX: nvidia-
-  BASE_IMAGE: ghcr.io/m1k1o/neko/nvidia-base:latest
+  BASE_IMAGE: ghcr.io/m1k1o/neko/base:latest
 
 jobs:
   build-app:
@@ -20,8 +19,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - name: discord
+            platforms: linux/amd64
           - name: kodi
-            dockerfile: Dockerfile.nvidia
+            platforms: linux/amd64
+          - name: vncviewer
+            platforms: linux/amd64
+          - name: vscode
+            platforms: linux/amd64
+          - name: zoom
             platforms: linux/amd64
     steps:
       - name: Checkout
@@ -39,7 +45,7 @@ jobs:
         uses: docker/metadata-action@v5
         id: meta
         with:
-          images: ghcr.io/${{ github.repository }}/${{ env.FLAVOR_PREFIX }}${{ matrix.name }}
+          images: ghcr.io/${{ github.repository }}/${{ matrix.name }}
           tags: |
             type=edge,branch=master
             type=semver,pattern={{version}}
