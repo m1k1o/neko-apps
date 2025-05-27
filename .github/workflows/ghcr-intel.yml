@@ -23,7 +23,13 @@ jobs:
         include:
           - name: discord
             platforms: linux/amd64
+          - name: handbrake
+            platforms: linux/amd64
+          - name: kdenlive
+            platforms: linux/amd64
           - name: kodi
+            platforms: linux/amd64
+          - name: obs
             platforms: linux/amd64
           - name: vncviewer
             platforms: linux/amd64
