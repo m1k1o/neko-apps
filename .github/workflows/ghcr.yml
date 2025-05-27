@@ -30,6 +30,8 @@ jobs:
             platforms: linux/amd64
           - name: zoom
             platforms: linux/amd64
+          - name: obs
+            platforms: linux/amd64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
