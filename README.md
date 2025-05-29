@@ -9,17 +9,20 @@ Best served with [neko-rooms](https://github.com/m1k1o/neko-rooms), simple room 
 You can build any container by calling `./build` binary. Use dir name as application name to build.
 
 ```sh
-./build <dir-name>
+./build --application <application_name>
+./build --application <application_name> --base_image ghcr.io/m1k1o/neko/base:latest
 ```
 
-You can copy `.env` to `.env.local` and modify your build image or neko base image.
+Your new image will be tagged as `ghcr.io/m1k1o/neko-apps/<application_name>`
 
-Your new image will be tagged as `m1k1o/neko-apps:<dir-name>`
+### For flavored images (e.g. `nvidia`)
 
-### For nvidia- images
+```sh
+./build --flavor <flavor> --application <application_name>
+```
 
-You need to go to neko repo and build `nvidia-base` image first.
+Your new image will be tagged as `ghcr.io/m1k1o/neko-apps/<flavor>-<application_name>`
 
 ## How to run
 
-Please follow [getting started](https://neko.m1k1o.net/#/getting-started/examples) guide from neko or neko-rooms.
+Please follow [getting started](https://neko.m1k1o.net/docs/v3/quick-start) guide in neko documentation.
