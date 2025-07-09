@@ -1,0 +1,20 @@
+services:
+  neko:
+    image: 'ghcr.io/m1k1o/neko/google-chrome'
+    restart: unless-stopped
+    shm_size: 2gb
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - '8080:8080'
+      - '9223:9223'                    # Socat proxy for external DevTools access
+      - '52000-52100:52000-52100/udp'
+    volumes:
+      # Persistent browser profile storage (custom location)
+      - "./chrome-profile:/home/neko/chrome-profile"
+    environment:
+      NEKO_DESKTOP_SCREEN: 1366x768@30
+      NEKO_MEMBER_MULTIUSER_USER_PASSWORD: neko
+      NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD: admin
+      NEKO_WEBRTC_EPR: 52000-52100
+      NEKO_WEBRTC_ICELITE: 1
