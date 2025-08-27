@@ -8,7 +8,7 @@ ARG SRC_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd
 RUN set -eux; \
     apt-get update; \
     wget -O /tmp/google-chrome.deb "${SRC_URL}"; \
-    apt-get install -y --no-install-recommends openbox socat /tmp/google-chrome.deb; \
+    apt-get install -y --no-install-recommends openbox socat xdotool scrot /tmp/google-chrome.deb; \
     # Clean up
     apt-get clean -y; \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
