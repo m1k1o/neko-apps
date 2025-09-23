@@ -1,0 +1,26 @@
+services:
+  neko:
+    build: .
+    restart: "unless-stopped"
+    shm_size: "3gb"
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - "3003:8080"
+      - "9223:9223"
+      - "52000-52100:52000-52100/udp"
+    volumes:
+      - ./extensions:/home/neko/extensions
+      - ./policies.json:/etc/brave/policies/managed/policies.json
+      - ./brave.conf:/etc/neko/supervisord/brave.conf
+      - ./chrome-profile:/home/neko/chrome-profile
+    environment:
+      NEKO_CHROME_FLAGS: "--remote-debugging-port=9222 --disable-gpu --no-sandbox --load-extension=/home/neko/extensions/autorun-extension-v1.0.2"
+      NEKO_NAT1TO1: "127.0.0.1"
+      
+      NEKO_MEMBER_PROVIDER: "multiuser"
+      NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD: "neko"
+      NEKO_MEMBER_MULTIUSER_USER_PASSWORD: "admin"
+      # NEKO_DESKTOP_SCREEN: "1920x1080@30"
+      NEKO_WEBRTC_EPR: 52000-52100
+      # NEKO_WEBRTC_ICELITE: 1
