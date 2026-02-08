@@ -28,11 +28,11 @@ function help() {
   echo
   echo "Options:"
   echo "  -p, --platform    : The platform (default: system architecture)"
-  echo "  -r, --repository  : The repository prefix (default: ghcr.io/m1k1o/neko)"
+  echo "  -r, --repository  : The repository prefix (default: ghcr.io/m1k1o/neko-apps)"
   echo "  -t, --tag         : The image tag, can be specified multiple times, if not specified"
   echo "                      uses 'latest' and if available, current git semver tag (v*.*.*)"
   echo "  -f, --flavor      : The flavor, if not specified, builds without flavor"
-  echo "  -b, --base_image  : The base image name (default: <repository>[<flavor>-]base:<tag>)"
+  echo "  -b, --base_image  : The base image name (default: ghcr.io/m1k1o/neko/[<flavor>-]base:<tag>)"
   echo "  -a, --application : The app to build, if not specified, builds the base image"
   echo "  -y, --yes         : Skip confirmation prompts"
   echo "      --no-cache    : Build without docker cache"
@@ -65,7 +65,7 @@ while [[ "$#" -gt 0 ]]; do
     --base_image|-b) BASE_IMAGE="$2"; shift ;;
     --application|-a) APPLICATION="$2"; shift ;;
     --yes|-y) YES=1 ;;
-    --no-cache) NO_CACHE="--no-cache" log "Building without cache" ;;
+    --no-cache) NO_CACHE=1 ;;
     --push) PUSH=1 ;;
     --help|-h) help; exit 0 ;;
     -*) log "Unknown parameter passed: $1"; help; exit 1 ;;
@@ -262,11 +262,20 @@ fi
 
 if [ -z "$BASE_IMAGE" ]; then
   if [ -z "$FLAVOR" ]; then
-    BASE_IMAGE="$REPOSITORY/base:$TAG"
+    BASE_IMAGE="ghcr.io/m1k1o/neko/base:$TAG"
   else
-    BASE_IMAGE="$REPOSITORY/$FLAVOR-base:$TAG"
+    BASE_IMAGE="ghcr.io/m1k1o/neko/$FLAVOR-base:$TAG"
   fi
 fi
+
+if [ ! -z "$NO_CACHE" ] && [ "$NO_CACHE" != "0" ]; then
+  NO_CACHE="--no-cache"
+  log "Building without cache"
+else
+  NO_CACHE=""
+fi
+
+# --------------------------------------------------------------------
 
 if [ -z "$APPLICATION" ]; then
   log "No application specified"
